@@ -58,7 +58,7 @@
             </table>
         </div>
         <div class="card-footer d-flex justify-content-end ">
-            <a href="{{route('tickets.print.all')}}" class="btn btn-sm btn-outline-warning" target="_blank" rel="noopener noreferrer">Imprimir todo</a>
+            <a href="{{route('tickets.print.all')}}" class="btn btn-sm btn-warning" target="_blank" rel="noopener noreferrer">Imprimir todo</a>
         </div>
     </div>
 @endsection

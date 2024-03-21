@@ -58,7 +58,7 @@
         .bg-logo {
             position: absolute;
             left: 50%;
-            top: 150px;
+            top: 110px;
             transform: translateX(-50%);
             opacity: 0.25;
             width: 60%;

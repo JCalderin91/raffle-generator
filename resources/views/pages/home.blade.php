@@ -47,7 +47,7 @@
         </div>
         <div class="card-footer justify-content-end d-flex gap-2">
             <button type="button" class="btn btn-sm btn-info">Ver todo</button>
-            <button type="button" class="btn btn-sm btn-danger">Imprimir todo</button>
+            <button type="button" class="btn btn-sm btn-danger">mir todo</button>
         </div>
     </div>
 @endsection
