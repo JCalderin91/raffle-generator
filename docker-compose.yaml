@@ -1,0 +1,65 @@
+version: "3.8"
+
+services:
+  app:
+    image: "raffle/app:${TAG:-latest}"
+    build:
+      args:
+        user: ${USER:-root}
+        uid: 1000
+      context: ./
+      dockerfile: Dockerfile
+    container_name: raffle-app
+    restart: unless-stopped
+    working_dir: /var/www/
+    volumes:
+      - ./:/var/www
+    networks:
+      - app-network
+    environment:
+      - TAG=${TAG:-latest}
+      - USER=${USER:-root}
+
+  web:
+    image: nginx:alpine
+    container_name: raffle-nginx
+    restart: unless-stopped
+    ports:
+      - ${SERVER_PORT:-80}:80
+    volumes:
+      - ./:/var/www
+      - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
+    networks:
+      - app-network
+
+  db:
+    image: mysql:5.7
+    container_name: raffle-db
+    restart: unless-stopped
+    ports:
+      - ${SERVER_PORT_DB:-3306}:3306
+    environment:
+      - MYSQL_DATABASE=${DB_DATABASE:-homestead}
+      - MYSQL_USER=${DB_USERNAME:-homestead}
+      - MYSQL_PASSWORD=${DB_PASSWORD:-secret}
+      - MYSQL_ROOT_PASSWORD=${DB_PASSWORD:-secret}
+    networks:
+      - app-network
+
+  phpmyadmin:
+    container_name: raffle-phpmyadmin
+    image: phpmyadmin
+    restart: unless-stopped
+    ports:
+      - ${PHPMYADMIN_PORT_DB:-8080}:80
+    environment:
+      - PMA_ARBITRARY=1
+      - PMA_HOST=${DB_HOST:-db}
+      - PMA_USER=${DB_USERNAME:-homestead}
+      - PMA_PASSWORD=${DB_PASSWORD:-secret}
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
