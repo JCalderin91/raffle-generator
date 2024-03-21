@@ -1,7 +1,9 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TicketController;
 use App\Http\Controllers\ParticipantController;
+use App\Http\Controllers\RaffleConfigurationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,3 +21,5 @@ Route::get('/', function () {
 });
 
 Route::resource('participants', ParticipantController::class);
+Route::resource('raffles', RaffleConfigurationController::class);
+Route::resource('tickets', TicketController::class);

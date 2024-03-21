@@ -22,5 +22,11 @@ class Ticket extends Model
         'numbers' => 'object',
     ];
 
+    public function owner()
+    {
+        return $this->belongsTo(Participant::class, 'participant_id');
+    }
+    
+
     
 }
