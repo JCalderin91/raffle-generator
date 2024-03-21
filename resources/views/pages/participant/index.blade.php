@@ -14,7 +14,7 @@ Participantes | Generador de rifas
             </div>
         </div>
         <div class="card-body p-0">
-            @include('participant.table')
+            @include('pages.participant.table')
         </div>
     </div>
     <nav aria-label="Page navigation example">
