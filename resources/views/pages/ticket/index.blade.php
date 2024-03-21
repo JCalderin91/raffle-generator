@@ -4,6 +4,18 @@
     Cartones | Generador de rifas
 @endsection
 
+@section('styles')
+<style>
+    .number{
+        margin-right: 4px;
+        background-color: aliceblue;
+        border-radius: 16px;
+        padding: 2px 4px;
+    }
+</style>
+    
+@endsection
+
 @section('content')
     <div class="card mb-3">
         <div class="card-header">
@@ -26,9 +38,13 @@
                         <tr>
                             <th scope="row">{{ $key + 1 }}</th>
                             <td>{{ $ticket->owner->name }}</td>
-                            <td>{{ $ticket->numbers }}</td>
                             <td>
-                                <a href="{{route('tickets.print', [$ticket->id])}}" class="btn btn-sm btn-info">Imprimir</a>
+                                @foreach (explode(',', $ticket['numbers']) as $number)
+                                    <span class="number">{{str_pad($number, 3, '0', STR_PAD_LEFT)}} </span>
+                                @endforeach
+                            </td>
+                            <td>
+                                <a href="{{route('tickets.print', [$ticket->id])}}" target="_blank" class="btn btn-sm btn-info">Imprimir</a>
                             </td>
                         </tr>
                     @empty
@@ -40,6 +56,9 @@
                     @endforelse
                 </tbody>
             </table>
+        </div>
+        <div class="card-footer d-flex justify-content-end ">
+            <a href="{{route('tickets.print.all')}}" class="btn btn-sm btn-outline-warning" target="_blank" rel="noopener noreferrer">Imprimir todo</a>
         </div>
     </div>
 @endsection

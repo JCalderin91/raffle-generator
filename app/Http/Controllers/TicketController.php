@@ -67,13 +67,14 @@ class TicketController extends Controller
     public function print($ticketId)
     {
         $ticket = Ticket::where('id',$ticketId)->with('owner','raffle')->first();
-        $pdf = Pdf::loadView('pdf.raffle', ['ticket'=>$ticket->toArray()])->setPaper('letter', 'landscape');
+        $pdf = Pdf::loadView('pdf.raffle', ['ticket'=>$ticket->toArray()])->setPaper('letter', 'portrait');
         return $pdf->stream('ticket.pdf');
     }
 
-    public function destroy($raffleId)
+    public function printAll()
     {
-        
-       
+        $tickets = Ticket::with('owner','raffle')->get();
+        $pdf = Pdf::loadView('pdf.raffles', ['tickets'=>$tickets->toArray()])->setPaper('letter', 'portrait');
+        return $pdf->stream('tickets.pdf');
     }
 }
