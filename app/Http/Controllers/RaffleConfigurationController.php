@@ -10,10 +10,15 @@ class RaffleConfigurationController extends Controller
     
     public function index()
     {
-        $raffleConfig = Raffle::all();
+        $raffleConfigs = Raffle::all();
 
-        return view('pages.raffle.index', compact('raffleConfig'));
+        return view('pages.raffle.index', compact('raffleConfigs'));
         
+    }
+
+    public function create()
+    {
+        return view('pages.raffle.create');
     }
 
     public function store(Request $request)
@@ -28,7 +33,7 @@ class RaffleConfigurationController extends Controller
         Raffle::create([
             'numbers' => $request->numbers,
             'draw_date' => $request->draw_date,
-            'awards' => $request->awards,
+            'awards' => (object) $request->awards,
             'price' => $request->price,
 
         ]);

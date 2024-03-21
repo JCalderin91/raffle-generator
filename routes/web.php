@@ -22,4 +22,5 @@ Route::get('/', function () {
 
 Route::resource('participants', ParticipantController::class);
 Route::resource('raffles', RaffleConfigurationController::class);
+Route::get('tickets/{ticketId}/print', [TicketController::class,'print'])->name('tickets.print');
 Route::resource('tickets', TicketController::class);

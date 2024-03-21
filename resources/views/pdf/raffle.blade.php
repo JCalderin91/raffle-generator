@@ -7,6 +7,6 @@
     <title>Raffle</title>
 </head>
 <body>
-    
+        {{$ticket['numbers']}}
 </body>
 </html>

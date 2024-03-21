@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Participant;
 use App\Models\Raffle;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class TicketController extends Controller
 {
@@ -15,6 +17,12 @@ class TicketController extends Controller
 
         return view('pages.ticket.index', compact('tickets'));
         
+    }
+
+    public function create()
+    {
+        $participants = Participant::all();
+        return view('pages.ticket.create', compact('participants'));
     }
 
     public function store(Request $request)
@@ -56,9 +64,11 @@ class TicketController extends Controller
         return redirect()->route('tickets.index');
     }
 
-    public function update(Request $request, $raffleId)
+    public function print($ticketId)
     {
-       
+        $ticket = Ticket::where('id',$ticketId)->with('owner','raffle')->first();
+        $pdf = Pdf::loadView('pdf.raffle', ['ticket'=>$ticket->toArray()])->setPaper('letter', 'landscape');
+        return $pdf->stream('ticket.pdf');
     }
 
     public function destroy($raffleId)
