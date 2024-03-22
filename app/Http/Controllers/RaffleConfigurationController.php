@@ -35,7 +35,6 @@ class RaffleConfigurationController extends Controller
             'draw_date' => $request->draw_date,
             'awards' => (object) $request->awards,
             'price' => $request->price,
-
         ]);
 
         return redirect()->route('raffles.index');

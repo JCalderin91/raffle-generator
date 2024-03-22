@@ -85,7 +85,7 @@
                         <div class="mb-3">
                             <label for="exampleFormControlInput1" class="form-label">Nombre</label>
                             <input type="text" class="form-control" id="exampleFormControlInput1"
-                                placeholder="Ingrese el nombre" name="name">
+                                placeholder="Ingrese el nombre" name="name" autofocus>
                         </div>
                         <div class="form-check form-switch">
                             <input name="status" class="form-check-input" type="checkbox" role="switch"
@@ -119,7 +119,7 @@
                         <div class="mb-3">
                             <label for="updateName" class="form-label">Nombre</label>
                             <input type="text" class="form-control" id="updateName"
-                                placeholder="Ingrese el nombre" name="name">
+                                placeholder="Ingrese el nombre" name="name" autofocus>
                         </div>
                         <div class="form-check form-switch">
                             <input name="status" class="form-check-input" type="checkbox" role="switch"

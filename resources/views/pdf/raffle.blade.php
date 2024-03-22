@@ -16,12 +16,18 @@
         }
 
         table {
-            border-collapse: collapse
+            border-collapse: collapse;
+            width: 100%;
         }
 
         .name {
-            font-size: 24px;
+            font-size: 20px;
             font-family: sans-serif !important;
+            text-align: right;
+        }
+
+        .price {
+            text-align: left
         }
 
         .raffle-ticket {
@@ -39,6 +45,7 @@
 
         .table {
             position: relative;
+            width: 100%;
         }
 
         .header {
@@ -50,7 +57,8 @@
             font-weight: bold;
             margin-bottom: 8px;
         }
-        .award{
+
+        .award {
             font-size: 14px;
         }
 
@@ -74,6 +82,14 @@
             margin-top: 8px;
             display: block;
         }
+
+        .table-bottom {
+            margin-top: 4px;
+        }
+
+        .table-bottom td {
+            vertical-align: bottom
+        }
     </style>
 </head>
 
@@ -83,6 +99,7 @@
         $colsNumber = 4;
         $cols = array_chunk($numbers, $colsNumber);
         $awards = $ticket['raffle']['awards'];
+        $price = $ticket['raffle']['price'];
         $name = $ticket['owner']['name'];
     @endphp
 
@@ -96,10 +113,8 @@
                         <td colspan="{{ $colsNumber }}" class="header">
                             <h4 class="main-text">Con la compra colaboras con la escuela de Taekwondo Americano</h4>
                             @foreach ($awards as $index => $award)
-                                @if (property_exists($award, 'status'))
-                                    <h4 class="award">{{ $index + 1 }}# Premio: {{ $award->raffle }} -
-                                        {{ $award->award }}</h4>
-                                @endif
+                                <h4 class="award">{{ $index + 1 }}# Premio: {{ $award->raffle }} -
+                                    {{ $award->award }}</h4>
                             @endforeach
                         </td>
                     </tr>
@@ -116,7 +131,17 @@
 
 
         <h5 class="bottom-text">Con la venta de este carton aseguro mi participacion</h5>
-        <h1 class="name">{{ $name }}</h1>
+        <table class="table-bottom">
+            <th>
+            <td>
+                <h3 class="price">${{ $price }}</h3>
+            </td>
+            <td>
+                <h2 class="name">{{ $name }}</h2>
+            </td>
+            </th>
+        </table>
+
     </section>
 
 </body>

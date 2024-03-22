@@ -13,19 +13,19 @@
                             <div class="col-3">
                                 <div class="mb-3">
                                     <label for="quantityNumInput" class="form-label">Cant. Numeros</label>
-                                    <input type="number" class="form-control" id="quantityNumInput" placeholder="0" name="numbers">
+                                    <input type="number" class="form-control" id="quantityNumInput" placeholder="0" name="numbers" value="20">
                                 </div>
                             </div>
                             <div class="col-6">
                                 <div class="mb-3">
                                     <label for="date" class="form-label">Fecha sorteo</label>
-                                    <input type="date" class="form-control" id="date" name="draw_date">
+                                    <input type="date" class="form-control" id="date" name="draw_date" value="2022-05-05">
                                 </div>
                             </div>
                             <div class="col-3">
                                 <div class="mb-3">
                                     <label for="price" class="form-label">Precio</label>
-                                    <input type="number" class="form-control" id="price" placeholder="00.00" name="price">
+                                    <input type="number" class="form-control" id="price" placeholder="00.00" name="price" value="20">
                                 </div>
                             </div>
                         </div>
@@ -35,36 +35,36 @@
                                 <div class="col-5">
                                     <div class="mb-3">
                                         <label for="raffleInput" class="form-label">Sorteo</label>
-                                        <input type="text" class="form-control" id="raffleInput" placeholder="Chance A" name="awards[0]['raffle']">
+                                        <input type="text" class="form-control" id="raffleInput" placeholder="Chance A" name="awards[0][raffle]" value="Chance A">
                                     </div>
                                 </div>
                                 <div class="col-5">
                                     <div class="mb-3">
                                         <label for="awardInput" class="form-label">Premio</label>
-                                        <input type="text" class="form-control" id="awardInput" placeholder="Chance B" name="awards[0]['award']">
+                                        <input type="text" class="form-control" id="awardInput" placeholder="Alimentos" name="awards[0][award]" value="Alimentos">
                                     </div>
                                 </div>
                                 <div class="col-2 mb-4">
                                     <input class="form-check-input" type="checkbox" role="switch"
-                                        id="updateStatus" checked name="awards[0]['status']">
+                                        id="updateStatus" checked name="awards[0][status]">
                                 </div>
                             </div>
                             <div class="row align-items-end">
                                 <div class="col-5">
                                     <div class="mb-3">
                                         <label for="raffleInput" class="form-label">Sorteo</label>
-                                        <input type="text" class="form-control" id="raffleInput" placeholder="Chance A" name="awards[1]['raffle']">
+                                        <input type="text" class="form-control" id="raffleInput" placeholder="Chance A" name="awards[1][raffle]" value="Chance B">
                                     </div>
                                 </div>
                                 <div class="col-5">
                                     <div class="mb-3">
                                         <label for="awardInput" class="form-label">Premio</label>
-                                        <input type="text" class="form-control" id="awardInput" placeholder="Chance B" name="awards[1]['award']">
+                                        <input type="text" class="form-control" id="awardInput" placeholder="Alimentos" name="awards[1][award]" value="Mas alimentos">
                                     </div>
                                 </div>
                                 <div class="col-2 mb-4">
                                     <input class="form-check-input" type="checkbox" role="switch"
-                                        id="updateStatus" checked name="awards[1]['status']">
+                                        id="updateStatus" checked name="awards[1][status]">
                                 </div>
                             </div>
                         </section>
