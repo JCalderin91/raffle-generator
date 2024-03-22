@@ -1,15 +1,14 @@
-version: "3.8"
+version: '3.8'
 
 services:
   app:
-    image: "raffle/app:${TAG:-latest}"
+    container_name: raffle-app
     build:
-      args:
-        user: ${USER:-root}
-        uid: 1000
       context: ./
       dockerfile: Dockerfile
-    container_name: raffle-app
+      args:
+        user: ${USER:-root}
+        uid: ${USER_UID:-1000}
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
@@ -18,26 +17,31 @@ services:
       - app-network
     environment:
       - TAG=${TAG:-latest}
-      - USER=${USER:-root}
+    env_file: 
+      - .env.production 
 
   web:
-    image: nginx:alpine
     container_name: raffle-nginx
+    image: nginx:1.21-alpine
     restart: unless-stopped
     ports:
-      - ${SERVER_PORT:-80}:80
+      - "${SERVER_PORT:-80}:80"
     volumes:
       - ./:/var/www
       - ./docker/nginx/conf.d/:/etc/nginx/conf.d/
     networks:
       - app-network
+    depends_on:
+      - app
+    env_file: 
+      - .env.production
 
   db:
-    image: mysql:5.7
     container_name: raffle-db
+    image: mysql:5.7
     restart: unless-stopped
     ports:
-      - ${SERVER_PORT_DB:-3306}:3306
+      - "${SERVER_PORT_DB:-3306}:3306"
     environment:
       - MYSQL_DATABASE=${DB_DATABASE:-homestead}
       - MYSQL_USER=${DB_USERNAME:-homestead}
@@ -45,13 +49,15 @@ services:
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD:-secret}
     networks:
       - app-network
+    env_file: 
+      - .env.production
 
   phpmyadmin:
     container_name: raffle-phpmyadmin
-    image: phpmyadmin
+    image: phpmyadmin/phpmyadmin:5.1
     restart: unless-stopped
     ports:
-      - ${PHPMYADMIN_PORT_DB:-8080}:80
+      - "${PHPMYADMIN_PORT_DB:-8080}:80"
     environment:
       - PMA_ARBITRARY=1
       - PMA_HOST=${DB_HOST:-db}
@@ -59,6 +65,10 @@ services:
       - PMA_PASSWORD=${DB_PASSWORD:-secret}
     networks:
       - app-network
+    depends_on:
+      - db
+    env_file: 
+      - .env.production
 
 networks:
   app-network:
