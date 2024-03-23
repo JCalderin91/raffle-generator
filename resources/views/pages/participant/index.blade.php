@@ -33,8 +33,9 @@
                                     <td>{{ $participant->name }}</td>
                                     <td>
                                         <div class="form-check form-switch">
-                                            <input name="status[]" value="{{ $participant->id }}" class="form-check-input"
-                                                type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                                            <input value="{{ $participant->id }}"
+                                                class="form-check-input participants-switch" type="checkbox" role="switch"
+                                                id="flexSwitchCheckChecked" checked>
                                         </div>
                                     </td>
                                     <td>
@@ -48,21 +49,31 @@
                                                     d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z" />
                                             </svg>
                                         </button>
-                                        <button type="button" class="btn btn-sm btn-success" title="Vista previa">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                fill="currentColor" class="bi bi-file-earmark-spreadsheet"
-                                                viewBox="0 0 16 16">
-                                                <path
-                                                    d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V9H3V2a1 1 0 0 1 1-1h5.5zM3 12v-2h2v2zm0 1h2v2H4a1 1 0 0 1-1-1zm3 2v-2h3v2zm4 0v-2h3v1a1 1 0 0 1-1 1zm3-3h-3v-2h3zm-7 0v-2h3v2z" />
-                                            </svg>
-                                        </button>
-                                        <button type="button" class="btn btn-sm btn-primary" title="Generar carton">
-                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                                fill="currentColor" class="bi bi-hammer" viewBox="0 0 16 16">
-                                                <path
-                                                    d="M9.972 2.508a.5.5 0 0 0-.16-.556l-.178-.129a5 5 0 0 0-2.076-.783C6.215.862 4.504 1.229 2.84 3.133H1.786a.5.5 0 0 0-.354.147L.146 4.567a.5.5 0 0 0 0 .706l2.571 2.579a.5.5 0 0 0 .708 0l1.286-1.29a.5.5 0 0 0 .146-.353V5.57l8.387 8.873A.5.5 0 0 0 14 14.5l1.5-1.5a.5.5 0 0 0 .017-.689l-9.129-8.63c.747-.456 1.772-.839 3.112-.839a.5.5 0 0 0 .472-.334" />
-                                            </svg>
-                                        </button>
+                                        @if ($participant->ticket)
+                                            <a href="" target="_blank" class="btn btn-sm btn-success d-inline-block"
+                                                title="Vista previa">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    fill="currentColor" class="bi bi-file-earmark-spreadsheet"
+                                                    viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V9H3V2a1 1 0 0 1 1-1h5.5zM3 12v-2h2v2zm0 1h2v2H4a1 1 0 0 1-1-1zm3 2v-2h3v2zm4 0v-2h3v1a1 1 0 0 1-1 1zm3-3h-3v-2h3zm-7 0v-2h3v2z" />
+                                                </svg>
+                                            </a>
+                                        @else
+                                            <form action="{{ route('tickets.store') }}" method="post"
+                                                class="d-inline-block ticket-generate-form">
+                                                @csrf
+                                                <input type="hidden" name="participants[]" value="{{ $participant->id }}">
+                                                <button type="submit" class="btn btn-sm btn-primary"
+                                                    title="Generar carton">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                        fill="currentColor" class="bi bi-hammer" viewBox="0 0 16 16">
+                                                        <path
+                                                            d="M9.972 2.508a.5.5 0 0 0-.16-.556l-.178-.129a5 5 0 0 0-2.076-.783C6.215.862 4.504 1.229 2.84 3.133H1.786a.5.5 0 0 0-.354.147L.146 4.567a.5.5 0 0 0 0 .706l2.571 2.579a.5.5 0 0 0 .708 0l1.286-1.29a.5.5 0 0 0 .146-.353V5.57l8.387 8.873A.5.5 0 0 0 14 14.5l1.5-1.5a.5.5 0 0 0 .017-.689l-9.129-8.63c.747-.456 1.772-.839 3.112-.839a.5.5 0 0 0 .472-.334" />
+                                                    </svg>
+                                                </button>
+                                            </form>
+                                        @endif
                                         <form id="delete-form-{{ $participant->id }}" method="POST"
                                             action="{{ route('participants.destroy', $participant->id) }}"
                                             class="d-inline-block">
@@ -90,7 +101,8 @@
                     </table>
                 </div>
                 <div class="card-footer d-flex justify-content-end gap-2 ">
-                    <button type="button" class="btn btn-success" {{ $participants->count() ? '' : 'disabled' }}>
+                    <button id="viewAllBtn" type="button" class="btn btn-success"
+                        {{ $participants->count() ? '' : 'disabled' }}>
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
                             class="bi bi-file-earmark-spreadsheet" viewBox="0 0 16 16">
                             <path
@@ -196,5 +208,44 @@
 
 
         }
+
+        document.querySelector('#viewAllBtn').addEventListener('click', function() {
+            const $participantIds = document.querySelectorAll('.participants-switch')
+            const ids = []
+            $participantIds.forEach($el => {
+                ids.push($el.value)
+            });
+            console.log(ids);
+        })
+
+        document.addEventListener("DOMContentLoaded", function(event) {
+            @if(session('success'))
+                Toast.fire({
+                    icon: "success",
+                    title: "{{session('success')}}"
+                });
+            @endif
+
+            @if(session('participant-saved'))
+                Toast.fire({
+                    icon: "success",
+                    title: "{{session('participant-saved')}}"
+                });
+            @endif
+
+            @if(session('participant-updated'))
+                Toast.fire({
+                    icon: "success",
+                    title: "{{session('participant-updated')}}"
+                });
+            @endif
+
+            @if(session('participant-deleted'))
+                Toast.fire({
+                    icon: "success",
+                    title: "{{session('participant-deleted')}}"
+                });
+            @endif
+        });
     </script>
 @endsection

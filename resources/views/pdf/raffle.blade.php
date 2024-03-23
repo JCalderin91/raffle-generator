@@ -20,15 +20,9 @@
             width: 100%;
         }
 
-        .name {
-            font-size: 20px;
-            font-family: sans-serif !important;
-            text-align: right;
-        }
-
-        .price {
-            text-align: left
-        }
+        
+        
+        
 
         .raffle-ticket {
             width: 373px;
@@ -72,19 +66,32 @@
         }
 
         .number {
-            font-size: 20px;
+            font-size: 16px;
             font-weight: bold;
             padding: 20px;
             border: 2px solid black;
         }
+        .date{
+            font-size: 14px;
+        }
+        .price {
+            font-size: 14px;
+            text-align: left
+        }
+        .name {
+            font-size: 14px;
+            font-family: sans-serif !important;
+            text-align: right;
+        }
 
         .bottom-text {
-            margin-top: 8px;
+            margin-top: 4px;
             display: block;
+            font-style: italic
         }
 
         .table-bottom {
-            margin-top: 4px;
+            margin-top: 8px;
         }
 
         .table-bottom td {
@@ -101,6 +108,7 @@
         $awards = $ticket['raffle']['awards'];
         $price = $ticket['raffle']['price'];
         $name = $ticket['owner']['name'];
+        $date = $ticket['raffle']['draw_date'];
     @endphp
 
 
@@ -134,7 +142,10 @@
         <table class="table-bottom">
             <th>
             <td>
-                <h3 class="price">${{ $price }}</h3>
+                <h3 class="price">Precio: ${{ number_format($price) }}</h3>
+            </td>
+            <td>
+                <h3 class="date">Fecha: {{ Carbon\Carbon::parse($date)->format('d-m-Y') }}</h3>
             </td>
             <td>
                 <h2 class="name">{{ $name }}</h2>

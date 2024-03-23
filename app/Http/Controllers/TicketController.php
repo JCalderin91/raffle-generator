@@ -44,7 +44,7 @@ class TicketController extends Controller
         $participants = Participant::whereIn('id', $request->participants)
                             ->doesntHave('ticket')
                             ->get()
-                            ->pluck('participant_id')
+                            ->pluck('id')
                             ->toArray();
 
         $totalNumbers = range(0, 999, 1);
@@ -75,7 +75,6 @@ class TicketController extends Controller
                 array_splice($totalNumbers,  $randomPosition, 1);
 
             }
-
             array_push($tickets, [
                 'participant_id' => $participant,
                 'raffle_id' => $raffleConfig->id,
@@ -86,8 +85,8 @@ class TicketController extends Controller
 
         Ticket::insert($tickets);
         
-
-        return redirect()->route('tickets.index');
+        session()->flash('success', 'Cartones generados con exito!');
+        return redirect()->route('participants.index');
     }
 
     public function print($ticketId)
