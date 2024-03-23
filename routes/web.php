@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\TicketController;
+use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\ParticipantController;
 use App\Http\Controllers\RaffleConfigurationController;
 
@@ -23,6 +24,10 @@ Route::get('/', function () {
 Route::get('/login', function () {
     return view('pages.auth.login');
 });
+
+Route::get('login', [LoginController::class, 'showLoginForm'])->name('login.show');
+Route::post('login', [LoginController::class,'login'])->name('login');
+Route::post('logout', [LoginController::class,'logout'])->name('logout');
 
 Route::resource('participants', ParticipantController::class);
 Route::resource('raffles', RaffleConfigurationController::class);

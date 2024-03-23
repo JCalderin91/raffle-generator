@@ -18,5 +18,9 @@ class Participant extends Model
         'name', 'status'
     ];
 
+    public function ticket()
+    {
+        return $this->hasOne(Ticket::class);
+    }
     
 }

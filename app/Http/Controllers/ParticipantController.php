@@ -14,12 +14,12 @@ class ParticipantController extends Controller
      */
     public function __construct()
     {
-        //
+        $this->middleware('auth');
     }
 
     public function index()
     {
-        $participants = Participant::all();
+        $participants = Participant::with('ticket')->get();
 
         return view('pages.participant.index', compact('participants'));
         

@@ -11,6 +11,16 @@ use Barryvdh\DomPDF\Facade\Pdf;
 class TicketController extends Controller
 {
     
+     /**
+     * Create a new controller instance.
+     *
+     * @return void
+     */
+    public function __construct()
+    {
+        $this->middleware('auth');
+    }
+    
     public function index()
     {
         $tickets = Ticket::with('owner')->get();
@@ -31,13 +41,29 @@ class TicketController extends Controller
             'participants' => ['required'],
         ]);
 
+        $participants = Participant::whereIn('id', $request->participants)
+                            ->doesntHave('ticket')
+                            ->get()
+                            ->pluck('participant_id')
+                            ->toArray();
+
         $totalNumbers = range(0, 999, 1);
+
+        $assignedNumbers = Ticket::all()
+                            ->pluck('numbers')
+                            ->map(function($item){
+                                return array_map('intval', explode(',', $item));
+                            })
+                            ->collapse()
+                            ->values();
+
+    $totalNumbers = collect($totalNumbers)->diff($assignedNumbers)->values()->toArray();
 
         $tickets = [];
         
         $raffleConfig = Raffle::first();
 
-        foreach($request->participants as $participant){
+        foreach($participants as $participant){
 
             $numbers = [];
 
