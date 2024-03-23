@@ -1,4 +1,4 @@
-version: '3.8'
+name: raffle
 
 services:
   app:
@@ -7,8 +7,8 @@ services:
       context: ./
       dockerfile: Dockerfile
       args:
-        user: ${USER:-root}
-        uid: ${USER_UID:-1000}
+        user: ${USER:-raffle}
+        uid: ${USER_UID:-1001}
     restart: unless-stopped
     working_dir: /var/www/
     volumes:
@@ -17,8 +17,8 @@ services:
       - app-network
     environment:
       - TAG=${TAG:-latest}
-    env_file: 
-      - .env.production 
+    env_file:
+      - .env.production
 
   web:
     container_name: raffle-nginx
@@ -33,7 +33,7 @@ services:
       - app-network
     depends_on:
       - app
-    env_file: 
+    env_file:
       - .env.production
 
   db:
@@ -49,12 +49,12 @@ services:
       - MYSQL_ROOT_PASSWORD=${DB_PASSWORD:-secret}
     networks:
       - app-network
-    env_file: 
+    env_file:
       - .env.production
 
   phpmyadmin:
     container_name: raffle-phpmyadmin
-    image: phpmyadmin/phpmyadmin:5.1
+    image: phpmyadmin
     restart: unless-stopped
     ports:
       - "${PHPMYADMIN_PORT_DB:-8080}:80"
@@ -67,7 +67,7 @@ services:
       - app-network
     depends_on:
       - db
-    env_file: 
+    env_file:
       - .env.production
 
 networks:
