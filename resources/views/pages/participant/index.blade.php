@@ -5,68 +5,107 @@
 @endsection
 
 @section('content')
-    <div class="card mb-3">
-        <div class="card-header">
-            <div class="d-flex justify-content-between">
-                <h4>Listado de participantes <span
-                        class="badge rounded-pill text-bg-primary fs-6">{{ $participants->count() }}</span></h4>
-                <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                    data-bs-target="#createParticipantModal">Agregar</button>
-            </div>
-        </div>
-        <div class="card-body p-0">
-            <table class="table mb-0">
-                <thead>
-                    <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Nombre</th>
-                        <th scope="col">Estado</th>
-                        <th scope="col">Acciones</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    @forelse ($participants as $key => $participant)
-                        <tr>
-                            <th scope="row">{{ $key + 1 }}</th>
-                            <td>{{ $participant->name }}</td>
-                            <td>
-                                {{-- <div class="form-check form-switch">
-                                    <input class="form-check-input" type="checkbox" role="switch"
-                                        id="flexSwitchCheckChecked" {{$participant->status == 1 ? 'checked' : ''}}>
-                                </div> --}}
+    <div class="row">
+        <div class="col-12 col-md-8 offset-md-2">
 
-                                @if ($participant->status == 1)
-                                    <span class="badge rounded-pill text-bg-success">Activo</span>
-                                @else
-                                    <span class="badge rounded-pill text-bg-danger">Inactivo</span>
-                                @endif
-                            </td>
-                            <td>
-                                <button onclick="updateHandle({{$participant->id}}, '{{$participant->name}}',{{$participant->status}})" type="button" class="btn btn-sm btn-warning update-button" title="Editar">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                        fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
-                                        <path
-                                            d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z" />
-                                    </svg>
-                                </button>
-                                <button type="button" class="btn btn-sm btn-danger" title="Eliminar">
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                        fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
-                                        <path
-                                            d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5" />
-                                    </svg>
-                                </button>
-                            </td>
-                        </tr>
-                    @empty
-                        <tr>
-                            <td colspan="4" class="text-center p-3">
-                                No hay participantes registrados 😢
-                            </td>
-                        </tr>
-                    @endforelse
-                </tbody>
-            </table>
+            <div class="card mb-3">
+                <div class="card-header">
+                    <div class="d-flex justify-content-between">
+                        <h4>Listado de participantes</h4>
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                            data-bs-target="#createParticipantModal">Agregar</button>
+                    </div>
+                </div>
+                <div class="card-body p-0">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr>
+                                <th scope="col" style="width: 50px">#</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col" style="width: 100px">Estado</th>
+                                <th scope="col" style="width: 200px">Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @forelse ($participants as $key => $participant)
+                                <tr>
+                                    <th scope="row">{{ $key + 1 }}</th>
+                                    <td>{{ $participant->name }}</td>
+                                    <td>
+                                        <div class="form-check form-switch">
+                                            <input name="status[]" value="{{ $participant->id }}" class="form-check-input"
+                                                type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <button
+                                            onclick="updateHandle({{ $participant->id }}, '{{ $participant->name }}',{{ $participant->status }})"
+                                            type="button" class="btn btn-sm btn-warning update-button"
+                                            title="Editar participante">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" class="bi bi-pen" viewBox="0 0 16 16">
+                                                <path
+                                                    d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001m-.644.766a.5.5 0 0 0-.707 0L1.95 11.756l-.764 3.057 3.057-.764L14.44 3.854a.5.5 0 0 0 0-.708z" />
+                                            </svg>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-success" title="Vista previa">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" class="bi bi-file-earmark-spreadsheet"
+                                                viewBox="0 0 16 16">
+                                                <path
+                                                    d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V9H3V2a1 1 0 0 1 1-1h5.5zM3 12v-2h2v2zm0 1h2v2H4a1 1 0 0 1-1-1zm3 2v-2h3v2zm4 0v-2h3v1a1 1 0 0 1-1 1zm3-3h-3v-2h3zm-7 0v-2h3v2z" />
+                                            </svg>
+                                        </button>
+                                        <button type="button" class="btn btn-sm btn-primary" title="Generar carton">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                fill="currentColor" class="bi bi-hammer" viewBox="0 0 16 16">
+                                                <path
+                                                    d="M9.972 2.508a.5.5 0 0 0-.16-.556l-.178-.129a5 5 0 0 0-2.076-.783C6.215.862 4.504 1.229 2.84 3.133H1.786a.5.5 0 0 0-.354.147L.146 4.567a.5.5 0 0 0 0 .706l2.571 2.579a.5.5 0 0 0 .708 0l1.286-1.29a.5.5 0 0 0 .146-.353V5.57l8.387 8.873A.5.5 0 0 0 14 14.5l1.5-1.5a.5.5 0 0 0 .017-.689l-9.129-8.63c.747-.456 1.772-.839 3.112-.839a.5.5 0 0 0 .472-.334" />
+                                            </svg>
+                                        </button>
+                                        <form id="delete-form-{{ $participant->id }}" method="POST"
+                                            action="{{ route('participants.destroy', $participant->id) }}"
+                                            class="d-inline-block">
+                                            @csrf
+                                            @method('delete')
+                                            <button type="button" onclick="destroyHandle({{ $participant->id }})"
+                                                class="btn btn-sm btn-danger" title="Eliminar participante">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                                    fill="currentColor" class="bi bi-trash3" viewBox="0 0 16 16">
+                                                    <path
+                                                        d="M6.5 1h3a.5.5 0 0 1 .5.5v1H6v-1a.5.5 0 0 1 .5-.5M11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3A1.5 1.5 0 0 0 5 1.5v1H1.5a.5.5 0 0 0 0 1h.538l.853 10.66A2 2 0 0 0 4.885 16h6.23a2 2 0 0 0 1.994-1.84l.853-10.66h.538a.5.5 0 0 0 0-1zm1.958 1-.846 10.58a1 1 0 0 1-.997.92h-6.23a1 1 0 0 1-.997-.92L3.042 3.5zm-7.487 1a.5.5 0 0 1 .528.47l.5 8.5a.5.5 0 0 1-.998.06L5 5.03a.5.5 0 0 1 .47-.53Zm5.058 0a.5.5 0 0 1 .47.53l-.5 8.5a.5.5 0 1 1-.998-.06l.5-8.5a.5.5 0 0 1 .528-.47M8 4.5a.5.5 0 0 1 .5.5v8.5a.5.5 0 0 1-1 0V5a.5.5 0 0 1 .5-.5" />
+                                                </svg>
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            @empty
+                                <tr>
+                                    <td colspan="4" class="text-center p-3">
+                                        No hay participantes registrados 😢
+                                    </td>
+                                </tr>
+                            @endforelse
+                        </tbody>
+                    </table>
+                </div>
+                <div class="card-footer d-flex justify-content-end gap-2 ">
+                    <button type="button" class="btn btn-success">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-file-earmark-spreadsheet" viewBox="0 0 16 16">
+                            <path
+                                d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V9H3V2a1 1 0 0 1 1-1h5.5zM3 12v-2h2v2zm0 1h2v2H4a1 1 0 0 1-1-1zm3 2v-2h3v2zm4 0v-2h3v1a1 1 0 0 1-1 1zm3-3h-3v-2h3zm-7 0v-2h3v2z" />
+                        </svg>
+                        Ver todos todos</button>
+                    <button type="button" class="btn btn-primary">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                            class="bi bi-hammer" viewBox="0 0 16 16">
+                            <path
+                                d="M9.972 2.508a.5.5 0 0 0-.16-.556l-.178-.129a5 5 0 0 0-2.076-.783C6.215.862 4.504 1.229 2.84 3.133H1.786a.5.5 0 0 0-.354.147L.146 4.567a.5.5 0 0 0 0 .706l2.571 2.579a.5.5 0 0 0 .708 0l1.286-1.29a.5.5 0 0 0 .146-.353V5.57l8.387 8.873A.5.5 0 0 0 14 14.5l1.5-1.5a.5.5 0 0 0 .017-.689l-9.129-8.63c.747-.456 1.772-.839 3.112-.839a.5.5 0 0 0 .472-.334" />
+                        </svg>
+                        Generar todos</button>
+                </div>
+            </div>
         </div>
     </div>
 
@@ -87,12 +126,6 @@
                             <input type="text" class="form-control" id="exampleFormControlInput1"
                                 placeholder="Ingrese el nombre" name="name" autofocus>
                         </div>
-                        <div class="form-check form-switch">
-                            <input name="status" class="form-check-input" type="checkbox" role="switch"
-                                id="flexSwitchCheckChecked" checked>
-                            <label class="form-check-label" for="flexSwitchCheckChecked">Activo</label>
-                        </div>
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -112,21 +145,15 @@
                     @csrf
                     @method('put')
                     <div class="modal-header">
-                        <h1 class="modal-title fs-5" id="updateParticipantModalLabel">Agregar participante</h1>
+                        <h1 class="modal-title fs-5" id="updateParticipantModalLabel">Editar participante</h1>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                     </div>
                     <div class="modal-body">
                         <div class="mb-3">
                             <label for="updateName" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="updateName"
-                                placeholder="Ingrese el nombre" name="name" autofocus>
+                            <input type="text" class="form-control" id="updateName" placeholder="Ingrese el nombre"
+                                name="name" autofocus>
                         </div>
-                        <div class="form-check form-switch">
-                            <input name="status" class="form-check-input" type="checkbox" role="switch"
-                                id="updateStatus" checked>
-                            <label class="form-check-label" for="updateStatus">Activo</label>
-                        </div>
-
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
@@ -147,10 +174,27 @@
         function updateHandle(id, name, status) {
             $updateParticipantModal.show()
             document.querySelector('#updateName').value = name
-            document.querySelector('#updateStatus').checked = Boolean(status)
-            $updateForm.action = "{{route('participants.index')}}/"+id
+            $updateForm.action = "{{ route('participants.index') }}/" + id
         }
 
+        function destroyHandle(id) {
 
+            Swal.fire({
+                title: "¿Está seguro?",
+                text: "Los cambios no se podrán revertir!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si, borralo!",
+                cancelButtonText: "No, cancelar!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    document.querySelector(`#delete-form-${id}`).submit()
+                }
+            });
+
+
+        }
     </script>
 @endsection

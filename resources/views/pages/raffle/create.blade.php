@@ -70,7 +70,6 @@
                         </section>
                     </div>
                     <div class="card-footer d-flex justify-content-end gap-3">
-                        <a href="/" class="btn btn-outline-secondary">Cancelar</a>
                         <button type="sybmit" class="btn btn-success">Guardar</button>
                     </div>
                 </form>

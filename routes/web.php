@@ -17,7 +17,11 @@ use App\Http\Controllers\RaffleConfigurationController;
 */
 
 Route::get('/', function () {
-    return redirect()->route('tickets.index');
+    return redirect()->route('participants.index');
+});
+
+Route::get('/login', function () {
+    return view('pages.auth.login');
 });
 
 Route::resource('participants', ParticipantController::class);

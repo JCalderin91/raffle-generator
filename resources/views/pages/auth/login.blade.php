@@ -1,10 +1,16 @@
 @extends('layouts.blank')
 @section('content')
-    <div class="card" style="width: 600px">
-        <div class="card-header">
-            <h3>Ingresar al sistema</h3>
+    <div class="card" style="max-width: 500px">
+        <div class="card-header text-center d-flex flex-column gap-2">
+            <figure>
+                <img src="https://i.ibb.co/vDPqBP4/logo-atin.png" alt="ATIN logo" height="120">
+            </figure>
+            <div class="text">
+                <h2>Rifas de ATIN</h2>
+                <h5>Ingresar al sistema</h5>
+            </div>
         </div>
-        <div class="card-body">
+        <div class="card-body px-5 py-4">
             <form action="">
                 <label for="emailInput" class="form-label">Correo electronico</label>
                 <div class="input-group mb-3">
@@ -31,8 +37,8 @@
                     </span>
                     <input type="password" class="form-control" id="passwordInput" placeholder="****************">
                 </div>
-                <div class="d-flex justify-content-end">
-                    <button type="button" class="btn btn-primary ">Ingresar</button>
+                <div class="d-flex justify-content-end mt-5">
+                    <button type="button" class="btn btn-primary ">Ingresar al sistema</button>
                 </div>
             </form>
         </div>
