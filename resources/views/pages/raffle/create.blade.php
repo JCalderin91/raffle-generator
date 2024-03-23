@@ -1,4 +1,9 @@
 @extends('layouts.app')
+
+@section('title')
+    Configuraciones | Generador de rifas - ATIN
+@endsection
+
 @section('content')
     <div class="row">
         <div class="col-6 offset-3">

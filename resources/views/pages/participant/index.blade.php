@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('title')
-    Participantes | Generador de rifas
+    Participantes | Generador de rifas - ATIN
 @endsection
 
 @section('content')
