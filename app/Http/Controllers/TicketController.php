@@ -96,9 +96,16 @@ class TicketController extends Controller
         return $pdf->stream('ticket.pdf');
     }
 
-    public function printAll()
+    public function printAll(Request $request)
     {
-        $tickets = Ticket::with('owner','raffle')->get();
+        $this->validate($request, [
+            'participants' => ['required'],
+        ]);
+
+        $tickets = Ticket::whereIn('participant_id', $request->participants)
+                            ->with('owner','raffle')
+                            ->get();
+
         $pdf = Pdf::loadView('pdf.raffles', ['tickets'=>$tickets->toArray()])->setPaper('letter', 'portrait');
         return $pdf->stream('tickets.pdf');
     }
