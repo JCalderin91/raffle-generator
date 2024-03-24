@@ -102,7 +102,8 @@ class TicketController extends Controller
             'participants' => ['required'],
         ]);
 
-        $tickets = Ticket::whereIn('participant_id', $request->participants)
+
+        $tickets = Ticket::whereIn('participant_id', json_decode($request->participants))
                             ->with('owner','raffle')
                             ->get();
 

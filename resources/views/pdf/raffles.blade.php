@@ -16,13 +16,13 @@
         }
 
         table {
-            border-collapse: collapse
+            border-collapse: collapse;
+            width: 100%;
         }
 
-        .name {
-            font-size: 24px;
-            font-family: sans-serif !important;
-        }
+
+
+
 
         .raffle-ticket {
             width: 373px;
@@ -39,6 +39,7 @@
 
         .table {
             position: relative;
+            width: 100%;
         }
 
         .header {
@@ -65,21 +66,46 @@
         }
 
         .number {
-            font-size: 20px;
+            font-size: 16px;
             font-weight: bold;
             padding: 20px;
             border: 2px solid black;
         }
 
+        .date {
+            font-size: 14px;
+        }
+
+        .price {
+            font-size: 14px;
+            text-align: left
+        }
+
+        .name {
+            font-size: 14px;
+            font-family: sans-serif !important;
+            text-align: right;
+        }
+
         .bottom-text {
-            margin-top: 8px;
+            margin-top: 4px;
             display: block;
+            font-style: italic
+        }
+
+        .table-bottom {
+            margin-top: 8px;
+        }
+
+        .table-bottom td {
+            vertical-align: bottom
         }
 
         .page-break {
             page-break-before: always
         }
-        .hide-break{
+
+        .hide-break {
             display: block;
             color: transparent;
             font-size: 1px;
@@ -99,6 +125,8 @@
             $cols = array_chunk($numbers, $colsNumber);
             $awards = $ticket['raffle']['awards'];
             $name = $ticket['owner']['name'];
+            $price = $ticket['raffle']['price'];
+            $date = $ticket['raffle']['draw_date'];
             $count += 1;
         @endphp
 
@@ -131,7 +159,20 @@
 
 
             <h5 class="bottom-text">Con la venta de este carton aseguro mi participacion</h5>
-            <h1 class="name">{{ $name }}</h1>
+            <table class="table-bottom">
+                <th>
+                <td>
+                    <h3 class="price">Precio: ${{ number_format($price) }}</h3>
+                </td>
+                <td>
+                    <h3 class="date">Fecha: {{ Carbon\Carbon::parse($date)->format('d-m-Y') }}</h3>
+                </td>
+                <td>
+                    <h2 class="name">{{ $name }}</h2>
+                </td>
+                </th>
+            </table>
+
         </section>
         @if ($count == 2)
             <div class="hide-break">hide</div>
