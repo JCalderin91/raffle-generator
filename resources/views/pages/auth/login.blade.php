@@ -1,7 +1,7 @@
 @extends('layouts.blank')
 @section('content')
     <div class="card" style="max-width: 550px">
-        <div class="card-header text-center d-flex flex-column gap-2">
+        <div class="card-header text-center d-flex flex-column gap-1">
             <figure>
                 <img src="https://i.ibb.co/vDPqBP4/logo-atin.png" alt="ATIN logo" height="120">
             </figure>
@@ -10,7 +10,7 @@
                 <h5>Ingresar al sistema</h5>
             </div>
         </div>
-        <div class="card-body px-5 py-4">
+        <div class="card-body  px-md-5 py-md-4">
             <form action="{{ route('login') }}" method="POST">
                 @csrf
                 <label for="emailInput" class="form-label">Nombre de usuario</label>

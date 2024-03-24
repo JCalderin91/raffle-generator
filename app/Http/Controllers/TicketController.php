@@ -140,7 +140,7 @@ class TicketController extends Controller
         });
     
         if(!$ticket){
-            session()->flash('no-result',  'No se encontró ganador.');
+            session()->flash('no-result',  'No se encontró cartón ganador.');
             return redirect()->back();
         }
         $participant = [

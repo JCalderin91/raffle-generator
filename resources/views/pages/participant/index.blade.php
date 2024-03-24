@@ -10,10 +10,14 @@
 
             <div class="card mb-3">
                 <div class="card-header">
-                    <div class="d-flex justify-content-between">
-                        <h4>Listado de participantes</h4>
-                        <button type="button" class="btn btn-success" data-bs-toggle="modal"
-                            data-bs-target="#createParticipantModal">Agregar</button>
+                    <div class="row">
+                        <div class="col-12 col-md-8 text-center text-md-start ">
+                            <h4>Listado de participantes</h4>
+                        </div>
+                        <div class="col-12 col-md-4 text-center text-md-end">
+                            <button type="button" class="btn btn-success" data-bs-toggle="modal"
+                                data-bs-target="#createParticipantModal">Agregar</button>
+                        </div>
                     </div>
                 </div>
                 <div class="card-body p-0">
@@ -29,9 +33,9 @@
                         <tbody>
                             @forelse ($participants as $key => $participant)
                                 <tr>
-                                    <th scope="row">{{ $key + 1 }}</th>
-                                    <td>{{ $participant->name }}</td>
-                                    <td>
+                                    <th class="align-content-center " scope="row">{{ $key + 1 }}</th>
+                                    <td class="align-content-center ">{{ $participant->name }}</td>
+                                    <td class="align-content-center ">
                                         <div class="form-check form-switch">
                                             <input form="previewForm" name="participants[]" value="{{ $participant->id }}"
                                                 type="hidden" checked>
@@ -40,7 +44,7 @@
                                                 type="checkbox" role="switch" id="flexSwitchCheckChecked" checked>
                                         </div>
                                     </td>
-                                    <td>
+                                    <td class="d-flex gap-1 flex-wrap ">
                                         <button
                                             onclick="updateHandle({{ $participant->id }}, '{{ $participant->name }}',{{ $participant->status }})"
                                             type="button" class="btn btn-sm btn-warning update-button"
@@ -67,7 +71,7 @@
                                                 @csrf
                                                 <input type="hidden" name="participants[]" value="{{ $participant->id }}">
                                                 <button type="submit" class="btn btn-sm btn-primary"
-                                                    title="Generar carton">
+                                                    title="Generar cartón">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                         fill="currentColor" class="bi bi-hammer" viewBox="0 0 16 16">
                                                         <path
@@ -102,44 +106,46 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="card-footer d-flex justify-content-between gap-2">
-
-                    <form id="deleteAllForm" action="{{ route('tickets.delete.all') }}" method="post">
-                        @csrf
-                        @method('delete')
-                        <button type="submit" class="btn btn-outline-danger">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-trash" viewBox="0 0 16 16">
-                                <path
-                                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
-                                <path
-                                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
-                            </svg>
-                            Borrar todos los cartones</button>
-                    </form>
-
-                    <section class="d-flex justify-content-end gap-2">
-                        <a href="#" id="viewAllBtn" target="_blank" type="button" class="btn btn-success"
-                            {{ $participants->count() ? '' : 'disabled' }}>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-file-earmark-spreadsheet" viewBox="0 0 16 16">
-                                <path
-                                    d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V9H3V2a1 1 0 0 1 1-1h5.5zM3 12v-2h2v2zm0 1h2v2H4a1 1 0 0 1-1-1zm3 2v-2h3v2zm4 0v-2h3v1a1 1 0 0 1-1 1zm3-3h-3v-2h3zm-7 0v-2h3v2z" />
-                            </svg>
-                            Ver todos todos</a>
-
-                        <form id="generateForm" action="{{ route('tickets.store') }}" method="post">
+                <div class="card-footer">
+                    <div class="row d-flex justify-content-between row">
+                        <form class="col-12 col-lg-4 order-1 order-lg-0 mt-3 mt-lg-0 text-center text-lg-start " id="deleteAllForm" action="{{ route('tickets.delete.all') }}" method="post">
                             @csrf
-                            <button type="submit" class="btn btn-primary"
-                                {{ $participants->count() ? '' : 'disabled' }}>
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
-                                    fill="currentColor" class="bi bi-hammer" viewBox="0 0 16 16">
+                            @method('delete')
+                            <button type="submit" class="btn btn-outline-danger">
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-trash" viewBox="0 0 16 16">
                                     <path
-                                        d="M9.972 2.508a.5.5 0 0 0-.16-.556l-.178-.129a5 5 0 0 0-2.076-.783C6.215.862 4.504 1.229 2.84 3.133H1.786a.5.5 0 0 0-.354.147L.146 4.567a.5.5 0 0 0 0 .706l2.571 2.579a.5.5 0 0 0 .708 0l1.286-1.29a.5.5 0 0 0 .146-.353V5.57l8.387 8.873A.5.5 0 0 0 14 14.5l1.5-1.5a.5.5 0 0 0 .017-.689l-9.129-8.63c.747-.456 1.772-.839 3.112-.839a.5.5 0 0 0 .472-.334" />
+                                        d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                    <path
+                                        d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
                                 </svg>
-                                Generar todos</button>
+                                Borrar todos los cartones</button>
                         </form>
-                    </section>
+    
+                        <section class="d-flex justify-content-center justify-content-lg-end flex-column flex-sm-row  align-items-center gap-2 col-12 col-lg-8 order-0 order-lg-1">
+                            <a href="#" id="viewAllBtn" target="_blank" type="button" class="btn btn-success flex-shrink-1 "
+                                {{ $participants->count() ? '' : 'disabled' }}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                    class="bi bi-file-earmark-spreadsheet" viewBox="0 0 16 16">
+                                    <path
+                                        d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V9H3V2a1 1 0 0 1 1-1h5.5zM3 12v-2h2v2zm0 1h2v2H4a1 1 0 0 1-1-1zm3 2v-2h3v2zm4 0v-2h3v1a1 1 0 0 1-1 1zm3-3h-3v-2h3zm-7 0v-2h3v2z" />
+                                </svg>
+                                Ver todos todos</a>
+    
+                            <form id="generateForm" action="{{ route('tickets.store') }}" method="post">
+                                @csrf
+                                <button type="submit" class="btn btn-primary"
+                                    {{ $participants->count() ? '' : 'disabled' }}>
+                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                        fill="currentColor" class="bi bi-hammer" viewBox="0 0 16 16">
+                                        <path
+                                            d="M9.972 2.508a.5.5 0 0 0-.16-.556l-.178-.129a5 5 0 0 0-2.076-.783C6.215.862 4.504 1.229 2.84 3.133H1.786a.5.5 0 0 0-.354.147L.146 4.567a.5.5 0 0 0 0 .706l2.571 2.579a.5.5 0 0 0 .708 0l1.286-1.29a.5.5 0 0 0 .146-.353V5.57l8.387 8.873A.5.5 0 0 0 14 14.5l1.5-1.5a.5.5 0 0 0 .017-.689l-9.129-8.63c.747-.456 1.772-.839 3.112-.839a.5.5 0 0 0 .472-.334" />
+                                    </svg>
+                                    Generar todos</button>
+                            </form>
+                        </section>
+                    </div>
+
                 </div>
             </div>
         </div>
