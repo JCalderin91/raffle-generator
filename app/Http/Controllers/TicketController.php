@@ -122,4 +122,33 @@ class TicketController extends Controller
         session()->flash('success', 'Cartones eliminados con  éxito!');
         return redirect()->back();
     }
+
+    public function getParticipantByTicketNumber(Request $request)
+    {
+        $tickets = Ticket::with('owner')->get();
+
+        $number = $request->number;
+
+        $participant = null;
+       
+        $ticket = $tickets->first(function($ticket) use($number){
+            $hasNumber = collect(explode(',', $ticket->numbers))->contains(function ($item) use($number) {
+                return $item == $number;
+            });
+
+           return $hasNumber;
+        });
+    
+        if(!$ticket){
+            session()->flash('no-result',  'No se encontró ganador.');
+            return redirect()->back();
+        }
+        $participant = [
+            'name' => $ticket->owner->name,
+            'number' => $number
+        ];
+
+        session()->flash('participant',  $participant);
+        return redirect()->back();
+    } 
 }

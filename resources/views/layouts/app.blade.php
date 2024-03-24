@@ -41,10 +41,10 @@
                             </svg>Configuraciones</a>
                     </li>
                 </ul>
-                <form class="d-flex" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Buscar número" aria-label="Search">
-                    <button class="btn btn-outline-success" type="button" data-bs-toggle="modal"
-                        data-bs-target="#findNumber" title="Buscar número">Buscar</button>
+                <form action="{{route('tickets.find.participant')}}" method="post" class="d-flex" role="search">
+                    @csrf
+                    <input class="form-control me-2" name="number" type="search" placeholder="Buscar número" aria-label="Search">
+                    <button class="btn btn-outline-success" type="submit" title="Buscar número">Buscar</button>
                 </form>
                 <form action="{{route('logout')}}" method="POST" class="d-inline-block">
                     @csrf
@@ -64,24 +64,26 @@
     <div class="container py-5">
         @yield('content')
     </div>
-
-    <div class="modal fade" id="findNumber" tabindex="-1" aria-labelledby="findNumberLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h1 class="modal-title fs-5" id="findNumberLabel">Resultado</h1>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <h6>El carton con el numero 000 pertenece a:</h6>
-                    <h4 class="text-success">Wendy Hurtado</h4>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+    
+    @if (session('participant'))
+        <div class="modal fade" id="findNumber" tabindex="-1" aria-labelledby="findNumberLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h1 class="modal-title fs-5" id="findNumberLabel">Resultado</h1>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h6>El carton con el numero {{session('participant')['number']}} pertenece a:</h6>
+                        <h4 class="text-success">{{session('participant')['name']}}</h4>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cerrar</button>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
+    @endif
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous">
@@ -99,6 +101,16 @@
                 toast.onmouseleave = Swal.resumeTimer;
             }
         });
+        @if (session('participant'))
+            new bootstrap.Modal(document.getElementById('findNumber')).show()
+        @endif
+        
+        @if (session('no-result'))
+            Toast.fire({
+                icon: "error",
+                title: "{{ session('no-result') }}"
+            });
+        @endif
     </script>
     @yield('scripts')
 </body>
