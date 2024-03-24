@@ -118,7 +118,7 @@
         $count = 0;
     @endphp
 
-    @foreach ($tickets as $index => $ticket)
+    @foreach ($tickets as $key => $ticket)
         @php
             $numbers = explode(',', $ticket['numbers']);
             $colsNumber = 4;
@@ -140,7 +140,7 @@
                                 <h4 class="main-text">Con la compra colaboras con la escuela de Taekwondo Americano</h4>
                                 @foreach ($awards as $index => $award)
                                     @if (property_exists($award, 'status'))
-                                        <h4 class="award">{{ $index + 1 }}# Premio: {{ $award->raffle }} -
+                                        <h4 class="award">{{ $index + 1 }}# {{ $award->raffle }} -
                                             {{ $award->award }}</h4>
                                     @endif
                                 @endforeach
@@ -158,7 +158,7 @@
             </div>
 
 
-            <h5 class="bottom-text">Con la venta de este carton aseguro mi participacion</h5>
+            <h5 class="bottom-text">Con la venta de este carton aseguro mi participación en los eventos programados.</h5>
             <table class="table-bottom">
                 <th>
                 <td>
@@ -174,10 +174,12 @@
             </table>
 
         </section>
+
         @if ($count == 2)
             <div class="hide-break">hide</div>
         @endif
-        @if ($count == 4)
+
+        @if ($count == 4 && ($key + 1) < count($tickets) )
             @php
                 $count = 0;
             @endphp

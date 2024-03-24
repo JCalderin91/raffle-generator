@@ -52,8 +52,8 @@
                                             </svg>
                                         </button>
                                         @if ($participant->ticket)
-                                            <a href="" target="_blank" class="btn btn-sm btn-success d-inline-block"
-                                                title="Vista previa">
+                                            <a href="{{ route('tickets.print', $participant->ticket->id) }}" target="_blank"
+                                                class="btn btn-sm btn-success d-inline-block" title="Vista previa">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
                                                     fill="currentColor" class="bi bi-file-earmark-spreadsheet"
                                                     viewBox="0 0 16 16">
@@ -102,26 +102,44 @@
                         </tbody>
                     </table>
                 </div>
-                <div class="card-footer d-flex justify-content-end gap-2 ">
-                    <a href="#" id="viewAllBtn" target="_blank" type="button" class="btn btn-success"
-                        {{ $participants->count() ? '' : 'disabled' }}>
-                        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                            class="bi bi-file-earmark-spreadsheet" viewBox="0 0 16 16">
-                            <path
-                                d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V9H3V2a1 1 0 0 1 1-1h5.5zM3 12v-2h2v2zm0 1h2v2H4a1 1 0 0 1-1-1zm3 2v-2h3v2zm4 0v-2h3v1a1 1 0 0 1-1 1zm3-3h-3v-2h3zm-7 0v-2h3v2z" />
-                        </svg>
-                        Ver todos todos</a>
+                <div class="card-footer d-flex justify-content-between gap-2">
 
-                    <form id="generateForm" action="{{ route('tickets.store') }}" method="post">
+                    <form id="deleteAllForm" action="{{ route('tickets.delete.all') }}" method="post">
                         @csrf
-                        <button type="submit" class="btn btn-primary" {{ $participants->count() ? '' : 'disabled' }}>
+                        @method('delete')
+                        <button type="submit" class="btn btn-outline-danger">
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
-                                class="bi bi-hammer" viewBox="0 0 16 16">
+                                class="bi bi-trash" viewBox="0 0 16 16">
                                 <path
-                                    d="M9.972 2.508a.5.5 0 0 0-.16-.556l-.178-.129a5 5 0 0 0-2.076-.783C6.215.862 4.504 1.229 2.84 3.133H1.786a.5.5 0 0 0-.354.147L.146 4.567a.5.5 0 0 0 0 .706l2.571 2.579a.5.5 0 0 0 .708 0l1.286-1.29a.5.5 0 0 0 .146-.353V5.57l8.387 8.873A.5.5 0 0 0 14 14.5l1.5-1.5a.5.5 0 0 0 .017-.689l-9.129-8.63c.747-.456 1.772-.839 3.112-.839a.5.5 0 0 0 .472-.334" />
+                                    d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5m3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0z" />
+                                <path
+                                    d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4zM2.5 3h11V2h-11z" />
                             </svg>
-                            Generar todos</button>
+                            Borrar todos los cartones</button>
                     </form>
+
+                    <section class="d-flex justify-content-end gap-2">
+                        <a href="#" id="viewAllBtn" target="_blank" type="button" class="btn btn-success"
+                            {{ $participants->count() ? '' : 'disabled' }}>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor"
+                                class="bi bi-file-earmark-spreadsheet" viewBox="0 0 16 16">
+                                <path
+                                    d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2M9.5 3A1.5 1.5 0 0 0 11 4.5h2V9H3V2a1 1 0 0 1 1-1h5.5zM3 12v-2h2v2zm0 1h2v2H4a1 1 0 0 1-1-1zm3 2v-2h3v2zm4 0v-2h3v1a1 1 0 0 1-1 1zm3-3h-3v-2h3zm-7 0v-2h3v2z" />
+                            </svg>
+                            Ver todos todos</a>
+
+                        <form id="generateForm" action="{{ route('tickets.store') }}" method="post">
+                            @csrf
+                            <button type="submit" class="btn btn-primary"
+                                {{ $participants->count() ? '' : 'disabled' }}>
+                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16"
+                                    fill="currentColor" class="bi bi-hammer" viewBox="0 0 16 16">
+                                    <path
+                                        d="M9.972 2.508a.5.5 0 0 0-.16-.556l-.178-.129a5 5 0 0 0-2.076-.783C6.215.862 4.504 1.229 2.84 3.133H1.786a.5.5 0 0 0-.354.147L.146 4.567a.5.5 0 0 0 0 .706l2.571 2.579a.5.5 0 0 0 .708 0l1.286-1.29a.5.5 0 0 0 .146-.353V5.57l8.387 8.873A.5.5 0 0 0 14 14.5l1.5-1.5a.5.5 0 0 0 .017-.689l-9.129-8.63c.747-.456 1.772-.839 3.112-.839a.5.5 0 0 0 .472-.334" />
+                                </svg>
+                                Generar todos</button>
+                        </form>
+                    </section>
                 </div>
             </div>
         </div>
@@ -237,6 +255,24 @@
 
         }
 
+        document.getElementById('deleteAllForm').addEventListener('submit', function (ev) {
+            ev.preventDefault()
+            Swal.fire({
+                title: "¿Está seguro?",
+                text: "Esta acción no se podrá revertir!",
+                icon: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si, borralos!",
+                cancelButtonText: "No, cancelar!",
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    ev.target.submit()
+                }
+            });
+        })
+
 
         document.addEventListener("DOMContentLoaded", function(event) {
             switchHandle() // init
@@ -244,6 +280,12 @@
                 Toast.fire({
                     icon: "success",
                     title: "{{ session('success') }}"
+                });
+            @endif
+            @if (session('error'))
+                Toast.fire({
+                    icon: "error",
+                    title: "{{ session('error') }}"
                 });
             @endif
         });

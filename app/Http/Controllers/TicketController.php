@@ -63,6 +63,11 @@ class TicketController extends Controller
         
         $raffleConfig = Raffle::first();
 
+        if(!$raffleConfig){
+            session()->flash('error', 'No hay configuración disponible');
+            return redirect()->back();
+        }
+
         foreach($participants as $participant){
 
             $numbers = [];
@@ -85,7 +90,7 @@ class TicketController extends Controller
 
         Ticket::insert($tickets);
         
-        session()->flash('success', 'Cartones generados con exito!');
+        session()->flash('success', 'Cartones generados con  éxito!');
         return redirect()->route('participants.index');
     }
 
@@ -109,5 +114,12 @@ class TicketController extends Controller
 
         $pdf = Pdf::loadView('pdf.raffles', ['tickets'=>$tickets->toArray()])->setPaper('letter', 'portrait');
         return $pdf->stream('tickets.pdf');
+    }
+
+    public function deleteAllTickets()
+    {
+        Ticket::query()->delete();
+        session()->flash('success', 'Cartones eliminados con  éxito!');
+        return redirect()->back();
     }
 }

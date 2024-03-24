@@ -28,7 +28,8 @@ class RaffleConfigurationController extends Controller
 
     public function create()
     {
-        return view('pages.raffle.create');
+        $raffleConfig = Raffle::get()->first();
+        return view('pages.raffle.create', compact('raffleConfig'));
     }
 
     public function store(Request $request)
@@ -47,7 +48,8 @@ class RaffleConfigurationController extends Controller
             'price' => $request->price,
         ]);
 
-        return redirect()->route('raffles.index');
+        session()->flash('success', 'Configuración guardada con  éxito!');
+        return redirect()->route('raffles.create');
     }
 
     public function update(Request $request, $raffleId)
@@ -67,8 +69,8 @@ class RaffleConfigurationController extends Controller
             'awards' => $request->awards,
             'price' => $request->price,
         ]);
-
-        return redirect()->route('raffles.index');
+        session()->flash('success', 'Configuración guardada con  éxito!');
+        return redirect()->route('raffles.create');
     }
 
     public function destroy($raffleId)

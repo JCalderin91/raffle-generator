@@ -21,7 +21,6 @@
                         <th scope="col">Cant. Numeros</th>
                         <th scope="col">Fecha</th>
                         <th scope="col">Precio</th>
-                        <th scope="col">Acciones</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -31,15 +30,10 @@
                             <td>{{ $raffleConfig->numbers }}</td>
                             <td>{{ $raffleConfig->draw_date }}</td>
                             <td>{{ $raffleConfig->price }}</td>
-                            <td>
-                                <a href="{{route('tickets.create')}}" type="button" class="btn btn-sm btn-info">
-                                    Crear cartones
-                                </a>
-                            </td>
                         </tr>
                     @empty
                         <tr>
-                            <td colspan="5" class="text-center p-3">
+                            <td colspan="4" class="text-center p-3">
                                 No hay rifas registradas 😢
                             </td>
                         </tr>

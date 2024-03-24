@@ -36,7 +36,7 @@ class ParticipantController extends Controller
             'status' => $request->has('status') ? 1 : 0
         ]);
 
-        session()->flash('success', 'Participante creado con exito!');
+        session()->flash('success', 'Participante creado con  éxito!');
 
         return redirect()->route('participants.index');
     }
@@ -54,7 +54,7 @@ class ParticipantController extends Controller
             'status' => $request->has('status') ? 1 : 0
         ]);
 
-        session()->flash('success', 'Participante actualizado con exito!');
+        session()->flash('success', 'Participante actualizado con  éxito!');
 
         return redirect()->route('participants.index');
     }
@@ -66,7 +66,7 @@ class ParticipantController extends Controller
 
         $participant->delete();
 
-        session()->flash('success', 'Participante borrado con exito!');
+        session()->flash('success', 'Participante borrado con  éxito!');
             
         return redirect()->route('participants.index');
     }

@@ -33,4 +33,5 @@ Route::resource('participants', ParticipantController::class);
 Route::resource('raffles', RaffleConfigurationController::class);
 Route::get('tickets/{ticketId}/print', [TicketController::class,'print'])->name('tickets.print');
 Route::get('tickets/print-all', [TicketController::class,'printAll'])->name('tickets.print.all');
+Route::delete('tickets/delete-all', [TicketController::class,'deleteAllTickets'])->name('tickets.delete.all');
 Route::resource('tickets', TicketController::class);

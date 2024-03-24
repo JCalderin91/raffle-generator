@@ -20,9 +20,9 @@
             width: 100%;
         }
 
-        
-        
-        
+
+
+
 
         .raffle-ticket {
             width: 373px;
@@ -71,13 +71,16 @@
             padding: 20px;
             border: 2px solid black;
         }
-        .date{
+
+        .date {
             font-size: 14px;
         }
+
         .price {
             font-size: 14px;
             text-align: left
         }
+
         .name {
             font-size: 14px;
             font-family: sans-serif !important;
@@ -109,6 +112,7 @@
         $price = $ticket['raffle']['price'];
         $name = $ticket['owner']['name'];
         $date = $ticket['raffle']['draw_date'];
+        $awardCount = 1;
     @endphp
 
 
@@ -121,8 +125,13 @@
                         <td colspan="{{ $colsNumber }}" class="header">
                             <h4 class="main-text">Con la compra colaboras con la escuela de Taekwondo Americano</h4>
                             @foreach ($awards as $index => $award)
-                                <h4 class="award">{{ $index + 1 }}# Premio: {{ $award->raffle }} -
-                                    {{ $award->award }}</h4>
+                                @if (property_exists($award, 'status'))
+                                    <h4 class="award">{{ $awardCount }}# {{ $award->raffle }} -
+                                        {{ $award->award }}</h4>
+                                    @php
+                                        $awardCount += 1;
+                                    @endphp
+                                @endif
                             @endforeach
                         </td>
                     </tr>
@@ -138,7 +147,7 @@
         </div>
 
 
-        <h5 class="bottom-text">Con la venta de este carton aseguro mi participacion</h5>
+        <h5 class="bottom-text">Con la venta de este carton aseguro mi participación</h5>
         <table class="table-bottom">
             <th>
             <td>
