@@ -147,7 +147,7 @@
         </div>
 
 
-        <h5 class="bottom-text">Con la venta de este carton aseguro mi participación</h5>
+        <h5 class="bottom-text">Con la venta de este carton aseguro mi participación en los eventos programados.</h5>
         <table class="table-bottom">
             <th>
             <td>
